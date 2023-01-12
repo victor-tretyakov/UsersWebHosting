@@ -1,0 +1,54 @@
+﻿@using System.Security.Claims;
+@model HomePageModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+@if (Model.IsUserSignedIn)
+{
+    <div class="text-left">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Avatar</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Users?.Count() > 0)
+                {
+                    foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                @{
+                                    var imgSrcFromAction = Url.Action("GetImage", "Home", new { id = user.UserId });
+                                }
+                                <img src="@imgSrcFromAction" alt="avatar" style="width:100%;max-width:300px" />
+                            </td>
+                            <td>
+                                @if (user.ShowAction)
+                                {
+                                    <a asp-action="DeleteUser" asp-controller="Home" asp-route-userid="@user.UserId" onclick="return confirm('Are you sure?')">Delete</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>No data is available</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

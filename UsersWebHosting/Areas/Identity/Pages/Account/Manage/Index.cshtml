@@ -29,7 +29,7 @@
     <div class="col-md-6">
         <form id="profile-form-image" method="post" enctype="multipart/form-data">
             <div class="form-floating mb-3">
-                <input type="file" name="postedFile" />
+                <input type="file" accept=".png,.jpg,.jpeg" name="postedFile" />
                 <input type="submit" id="btnUpload" value="Upload" asp-page-handler="UploadFile" />
             </div>
         </form>
